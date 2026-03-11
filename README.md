@@ -2,7 +2,7 @@
 
 This repository contains code related to **[Introduction to Algorithms](https://en.wikipedia.org/wiki/Introduction_to_Algorithms)**, 3rd Edition (Cormen, Leiserson, Rivest, Stein — often referred to as CLRS), published by MIT Press.
 
-**Cover image:** [Introduction to Algorithms (Wikipedia)](https://en.wikipedia.org/wiki/Introduction_to_Algorithms)
+**Cover image:** ![Introduction to Algorithms](./Clrs4.jpeg)
 
 ---
 
