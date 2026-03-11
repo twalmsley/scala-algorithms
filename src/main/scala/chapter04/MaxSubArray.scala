@@ -1,5 +1,6 @@
 package chapter04
 
+/* This uses a divide and conquer approach, but Kadane's algorithn is linear and faster. */
 def findMaxSubArray(
     as: Vector[Int],
     low: Int,
@@ -49,3 +50,33 @@ def findMaxCrossingSubArray(
       maxRight = j
 
   (maxLeft, maxRight, leftSum + rightSum)
+
+def findMaxSubArrayKadanesAlgorithm(
+    as: Vector[Int],
+    low: Int,
+    high: Int
+): (Int, Int, Int) =
+  var bestSum = Int.MinValue
+  var bestLeft = 0
+  var bestRight = 0
+  var currentSum = Int.MinValue
+  var currentLeft = 0 
+  var currentRight = 0
+
+  for j <- low to high
+  do
+    // currentSum = Math.max(as(j), currentSum + as(j))
+    if as(j) > currentSum + as(j) then
+      currentSum = as(j)
+      currentLeft = j
+      currentRight = j
+    else
+      currentSum += as(j)
+      currentRight = j
+
+    if currentSum > bestSum then
+      bestSum = currentSum
+      bestRight = currentRight
+      bestLeft = currentLeft
+
+  (bestLeft, bestRight, bestSum)
