@@ -1,7 +1,7 @@
 // For more information on writing tests, see
 import scala.collection.mutable.HashMap
 // https://scalameta.org/munit/docs/getting-started.html
-class MySuite extends munit.FunSuite {
+class FibonacciSuite extends munit.FunSuite {
   test("fib1 is correct"):
     assertEquals(fib1(1), 1)
     assertEquals(fib1(2), 1)
