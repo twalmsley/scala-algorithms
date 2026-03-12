@@ -14,4 +14,7 @@ class MaxSubArraySuite extends munit.FunSuite:
     assertEquals(findMaxSubArrayKadanesAlgorithm(as, 0, 15), (7, 10, 43))
 
   test("find max sub array using Kaldane's algorithm 2"):
-    assertEquals(findMaxSubArrayKadanesAlgorithm(as, 0, 7), (3, 4, 17))
+    assertEquals(findMaxSubArrayKadanesAlgorithm(as, 0, 7), (3, 3, 20))
+
+  test("find max sub array using Kaldane's algorithm 2"):
+    assertEquals(findMaxSubArrayKadanesAlgorithm(as, 4, 9), (7, 8, 38))

@@ -56,12 +56,12 @@ def findMaxSubArrayKadanesAlgorithm(
     low: Int,
     high: Int
 ): (Int, Int, Int) =
-  var bestSum = Int.MinValue
-  var bestLeft = 0
-  var bestRight = 0
-  var currentSum = Int.MinValue
-  var currentLeft = 0 
-  var currentRight = 0
+  var bestSum = 0
+  var bestLeft = low
+  var bestRight = low
+  var currentSum = 0
+  var currentLeft = low 
+  var currentRight = low
 
   for j <- low to high
   do
