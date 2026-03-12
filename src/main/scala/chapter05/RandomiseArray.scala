@@ -7,7 +7,7 @@ def randomiseArray(xs: Vector[Int]): Vector[Int] =
   for i <- 0 to copy.length - 1
   do
     val tmp = copy(i)
-    val rand = Random().between(0, copy.length)
+    val rand = Random().between(i, copy.length)
     copy(i) = copy(rand)
     copy(rand) = tmp
 
