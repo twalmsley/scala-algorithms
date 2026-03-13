@@ -1,5 +1,5 @@
 
-@main def intSwap():Unit =
+def intSwap():Unit =
   var x = 99
   var y = 45
 
