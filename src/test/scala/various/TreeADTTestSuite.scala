@@ -19,7 +19,7 @@ class TreeADTTestSuite extends munit.FunSuite:
       )
     println(tree)
 
-  test("Can insert elements into a Tree"):
+  test("Can insert elements into a Tree and find them"):
     val tree1 = treeInsert(1, EmptyTree())
     assertEquals(tree1, Leaf(1))
 
@@ -37,3 +37,17 @@ class TreeADTTestSuite extends munit.FunSuite:
       tree5,
       Node(1, Node(0, Leaf(-1), EmptyTree()), Node(2, EmptyTree(), Leaf(3)))
     )
+
+    assert(treeContains(-1, tree5))
+    assert(treeContains(0, tree5))
+    assert(treeContains(1, tree5))
+    assert(treeContains(2, tree5))
+    assert(treeContains(3, tree5))
+    assert(treeContains(4, tree5) == false)
+
+    assertEquals(treeFind(-1, tree5), Some(-1))
+    assertEquals(treeFind(0, tree5), Some(0))
+    assertEquals(treeFind(1, tree5), Some(1))
+    assertEquals(treeFind(2, tree5), Some(2))
+    assertEquals(treeFind(3, tree5), Some(3))
+    assertEquals(treeFind(4, tree5), None)
