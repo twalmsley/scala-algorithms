@@ -4,7 +4,7 @@ import scala.util.Random
 
 def randomiseArray(xs: Vector[Int]): Vector[Int] =
   val copy = xs.toArray
-  for i <- 0 to copy.length - 1
+  for i <- 0 until copy.length
   do
     val tmp = copy(i)
     val rand = Random().between(i, copy.length)
