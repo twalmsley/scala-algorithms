@@ -10,7 +10,6 @@ lazy val root = project
 
     libraryDependencies += "org.scalameta" %% "munit" % "1.2.4" % Test,
     scalacOptions ++= Seq(
-      "-language:strictEquality",
       "-deprecation",
       "-feature",
       "-Yexplicit-nulls"
