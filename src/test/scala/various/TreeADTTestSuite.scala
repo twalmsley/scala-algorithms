@@ -69,3 +69,7 @@ class TreeADTTestSuite extends munit.FunSuite:
     assertEquals(treeFind(2, tree5), Some(2))
     assertEquals(treeFind(3, tree5), Some(3))
     assertEquals(treeFind(4, tree5), None)
+
+    assertEquals(treeMin(tree5), Some(-1))
+    assertEquals(treeMax(tree5), Some(3))
+

@@ -3,6 +3,9 @@ import scala.collection.mutable.HashMap
 // https://scalameta.org/munit/docs/getting-started.html
 class FibonacciSuite extends munit.FunSuite {
   test("fib1 is correct"):
+    assertEquals(fib1(-2), 0)
+    assertEquals(fib1(-1), 0)
+    assertEquals(fib1(0), 0)
     assertEquals(fib1(1), 1)
     assertEquals(fib1(2), 1)
     assertEquals(fib1(3), 2)
@@ -24,6 +27,9 @@ class FibonacciSuite extends munit.FunSuite {
     assertEquals(fib1(19), 4181)
 
   test("fib2 is correct"):
+    assertEquals(fib2(-2, HashMap()), 0)
+    assertEquals(fib2(-1, HashMap()), 0)
+    assertEquals(fib2(0, HashMap()), 0)
     assertEquals(fib2(1, HashMap()), 1)
     assertEquals(fib2(2, HashMap()), 1)
     assertEquals(fib2(3, HashMap()), 2)
@@ -48,7 +54,7 @@ class FibonacciSuite extends munit.FunSuite {
     assert(time(n => fib1(n)) > time(n => fib2(n, HashMap())))
 }
 
-def time(f:Int => Int):Long = 
+def time(f: Int => Int): Long =
   val start = System.nanoTime()
   f(30)
   val duration = System.nanoTime() - start

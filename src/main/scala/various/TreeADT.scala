@@ -38,3 +38,16 @@ def treeFind[A](x: A, t: Tree[A])(implicit ord: Ordering[A]): Option[A] =
     case Node(y, left, right) if ord.compare(x, y) == 1 =>
       treeFind(x, right)
     case _ => None
+
+def treeMin[A](t: Tree[A]): Option[A] =
+  t match
+    case EmptyTree()             => None
+    case Node(x, EmptyTree(), _) => Some(x)
+    case Node(_, left, _)        => treeMin(left)
+
+def treeMax[A](t: Tree[A]): Option[A] =
+  t match
+    case EmptyTree()             => None
+    case Node(x, _, EmptyTree()) => Some(x)
+    case Node(_, _, right)       => treeMax(right)
+
