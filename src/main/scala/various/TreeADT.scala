@@ -51,3 +51,8 @@ def treeMax[A](t: Tree[A]): Option[A] =
     case Node(x, _, EmptyTree()) => Some(x)
     case Node(_, _, right)       => treeMax(right)
 
+def inOrder[A](t: Tree[A]): List[A] =
+  t match
+    case EmptyTree() => Nil
+    case Node(x, left, right) => (inOrder(left) :+ x) ::: inOrder(right)
+  
