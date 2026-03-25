@@ -1,24 +1,26 @@
 package monoid
 
-trait Semigroup[T]:
-  def combine(a: T, b: T): T
+trait Semigroup[A]:
+  def combine(a: A, b: A): A
 
 object Semigroup:
-  def apply[T](using instance: Semigroup[T]): Semigroup[T] = instance
+  def apply[A](using instance: Semigroup[A]): Semigroup[A] = instance
 
-trait Monoid[T] extends Semigroup[T]:
-  def empty: T
+trait Monoid[A] extends Semigroup[A]:
+  def empty: A
 
 object Monoid:
-  def apply[T](using instance: Monoid[T]): Monoid[T] = instance
+  def apply[A](using instance: Monoid[A]): Monoid[A] = instance
 
 object IntInstances:
 
+  def intAddition(a:Int, b:Int):Int = a + b
+
   given intAdditiveSemigroup: Semigroup[Int] with
-    override def combine(a: Int, b: Int): Int = a + b
+    override def combine(a: Int, b: Int): Int = intAddition(a, b)
 
   given intAdditiveMonoid: Monoid[Int] with
-    override def combine(a: Int, b: Int): Int = a + b
+    override def combine(a: Int, b: Int): Int = intAddition(a, b)
     override def empty: Int = 0
 
 object StringInstances:
@@ -31,11 +33,11 @@ object StringInstances:
     override def empty: String = ""
 
 object SemigroupSyntax:
-  extension [T](a: T)
-    def |+|(b: T)(using semigroup: Semigroup[T]): T = semigroup.combine(a, b)
+  extension [A](a: A)
+    def |+|(b: A)(using semigroup: Semigroup[A]): A = semigroup.combine(a, b)
 
 import SemigroupSyntax._
 
-def fold[T: Semigroup](list: List[T]): T =
+def fold[A: Semigroup](list: List[A]): A =
   list.reduce(_ |+| _)
 

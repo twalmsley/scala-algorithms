@@ -1,5 +1,7 @@
 import Tree.*
-class TreeADTTestSuite extends munit.FunSuite:
+import org.scalatest.funsuite.AnyFunSuite
+
+class TreeADTTestSuite extends AnyFunSuite:
 
   test("Can create a tree structure of ints"):
     val tree: Tree[Int] =
@@ -21,39 +23,39 @@ class TreeADTTestSuite extends munit.FunSuite:
 
   test("Can insert elements into a Tree and find them"):
     val tree1 = treeInsert(1, EmptyTree())
-    assertEquals(tree1, Node(1, EmptyTree(), EmptyTree()))
+    assert(tree1 == Node(1, EmptyTree(), EmptyTree()))
 
     val tree2 = treeInsert(2, tree1)
-    assertEquals(tree2, Node(1, EmptyTree(), Node(2, EmptyTree(), EmptyTree())))
+    assert(tree2 == Node(1, EmptyTree(), Node(2, EmptyTree(), EmptyTree())))
 
     val tree3 = treeInsert(0, tree2)
-    assertEquals(
-      tree3,
-      Node(
-        1,
-        Node(0, EmptyTree(), EmptyTree()),
-        Node(2, EmptyTree(), EmptyTree())
-      )
+    assert(
+      tree3 ==
+        Node(
+          1,
+          Node(0, EmptyTree(), EmptyTree()),
+          Node(2, EmptyTree(), EmptyTree())
+        )
     )
 
     val tree4 = treeInsert(-1, tree3)
-    assertEquals(
-      tree4,
-      Node(
-        1,
-        Node(0, Node(-1, EmptyTree(), EmptyTree()), EmptyTree()),
-        Node(2, EmptyTree(), EmptyTree())
-      )
+    assert(
+      tree4 ==
+        Node(
+          1,
+          Node(0, Node(-1, EmptyTree(), EmptyTree()), EmptyTree()),
+          Node(2, EmptyTree(), EmptyTree())
+        )
     )
 
     val tree5 = treeInsert(3, tree4)
-    assertEquals(
-      tree5,
-      Node(
-        1,
-        Node(0, Node(-1, EmptyTree(), EmptyTree()), EmptyTree()),
-        Node(2, EmptyTree(), Node(3, EmptyTree(), EmptyTree()))
-      )
+    assert(
+      tree5 ==
+        Node(
+          1,
+          Node(0, Node(-1, EmptyTree(), EmptyTree()), EmptyTree()),
+          Node(2, EmptyTree(), Node(3, EmptyTree(), EmptyTree()))
+        )
     )
 
     assert(treeContains(-1, tree5))
@@ -63,25 +65,24 @@ class TreeADTTestSuite extends munit.FunSuite:
     assert(treeContains(3, tree5))
     assert(treeContains(4, tree5) == false)
 
-    assertEquals(treeFind(-1, tree5), Some(-1))
-    assertEquals(treeFind(0, tree5), Some(0))
-    assertEquals(treeFind(1, tree5), Some(1))
-    assertEquals(treeFind(2, tree5), Some(2))
-    assertEquals(treeFind(3, tree5), Some(3))
-    assertEquals(treeFind(4, tree5), None)
+    assertResult(treeFind(-1, tree5), Some(-1))
+    assertResult(treeFind(0, tree5), Some(0))
+    assertResult(treeFind(1, tree5), Some(1))
+    assertResult(treeFind(2, tree5), Some(2))
+    assertResult(treeFind(3, tree5), Some(3))
+    assertResult(treeFind(4, tree5), None)
 
-    assertEquals(treeMin(tree5), Some(-1))
-    assertEquals(treeMax(tree5), Some(3))
+    assertResult(treeMin(tree5), Some(-1))
+    assertResult(treeMax(tree5), Some(3))
 
-    assertEquals(inOrder(tree5), List(-1, 0, 1, 2, 3))
-    assertEquals(size(tree5), 5)
-    assertEquals(size(EmptyTree()), 0)
+    assertResult(inOrder(tree5), List(-1, 0, 1, 2, 3))
+    assertResult(size(tree5), 5)
+    assertResult(size(EmptyTree()), 0)
 
-    assertEquals(ithEntry(-1, tree5), None)
-    assertEquals(ithEntry(0, tree5), Some(-1))
-    assertEquals(ithEntry(1, tree5), Some(0))
-    assertEquals(ithEntry(2, tree5), Some(1))
-    assertEquals(ithEntry(3, tree5), Some(2))
-    assertEquals(ithEntry(4, tree5), Some(3))
-    assertEquals(ithEntry(5, tree5), None)
-
+    assertResult(ithEntry(-1, tree5), None)
+    assertResult(ithEntry(0, tree5), Some(-1))
+    assertResult(ithEntry(1, tree5), Some(0))
+    assertResult(ithEntry(2, tree5), Some(1))
+    assertResult(ithEntry(3, tree5), Some(2))
+    assertResult(ithEntry(4, tree5), Some(3))
+    assertResult(ithEntry(5, tree5), None)

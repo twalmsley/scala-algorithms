@@ -1,8 +1,8 @@
 package digraph
 
-import munit.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class DigraphTestSuite extends FunSuite:
+class DigraphTestSuite extends AnyFunSuite:
 
   test("Can create minimal digraphs"):
     val v1: Vertex[String] = Vertex("v1", "Some Value 1")
@@ -10,8 +10,8 @@ class DigraphTestSuite extends FunSuite:
     val e1: Edge[String] = Edge("e1", v1, v2)
     val dg = Digraph(Set(v1, v2), Set(e1), Set(), Set(), Set())
 
-    assertEquals(e1.source, v1)
-    assertEquals(e1.target, v2)
+    assert(e1.source == v1)
+    assertResult(e1.target, v2)
 
   test("Can create a more complex digraph"):
     val v1: Vertex[Int] = Vertex("v1", 1)
@@ -60,4 +60,4 @@ class DigraphTestSuite extends FunSuite:
       .add(me1)
       .add(rme1)
 
-    assertEquals(dg1, dg3)
+    assertResult(dg1, dg3)
