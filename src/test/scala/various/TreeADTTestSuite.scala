@@ -74,4 +74,14 @@ class TreeADTTestSuite extends munit.FunSuite:
     assertEquals(treeMax(tree5), Some(3))
 
     assertEquals(inOrder(tree5), List(-1, 0, 1, 2, 3))
+    assertEquals(size(tree5), 5)
+    assertEquals(size(EmptyTree()), 0)
+
+    assertEquals(ithEntry(-1, tree5), None)
+    assertEquals(ithEntry(0, tree5), Some(-1))
+    assertEquals(ithEntry(1, tree5), Some(0))
+    assertEquals(ithEntry(2, tree5), Some(1))
+    assertEquals(ithEntry(3, tree5), Some(2))
+    assertEquals(ithEntry(4, tree5), Some(3))
+    assertEquals(ithEntry(5, tree5), None)
 

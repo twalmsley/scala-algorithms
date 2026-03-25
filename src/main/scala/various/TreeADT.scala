@@ -53,6 +53,19 @@ def treeMax[A](t: Tree[A]): Option[A] =
 
 def inOrder[A](t: Tree[A]): List[A] =
   t match
-    case EmptyTree() => Nil
+    case EmptyTree()          => Nil
     case Node(x, left, right) => (inOrder(left) :+ x) ::: inOrder(right)
-  
+
+def size[A](t: Tree[A]): Int =
+  t match
+    case EmptyTree()          => 0
+    case Node(_, left, right) => size(left) + 1 + size(right)
+
+def ithEntry[A](i: Int, t: Tree[A]): Option[A] =
+  val xs = inOrder(t)
+  if 0 <= i && xs.length > i then Some(xs(i))
+  else None
+
+
+
+
