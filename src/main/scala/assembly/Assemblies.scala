@@ -14,23 +14,33 @@ trait Diameter3mm
 
 trait Length10mm
 
+trait Length100mm
+
 trait MaterialSteel
 
-trait HeadHex2mm
+trait MinimalHeadDiameter2mm
 
-trait M3SteelBolt10mmHexHead
+trait BoltToBeTightened
     extends ThreadSizeM3,
       Diameter3mm,
       Length10mm,
       MaterialSteel,
-      HeadHex2mm,
+      MinimalHeadDiameter2mm,
       SpatioTemporalExtent
 
-trait AllenKey
+trait HexagonalDriver
 
-trait AllenKeyHex2mm extends HeadHex2mm, AllenKey, SpatioTemporalExtent
+trait AllenKeyHex2mm
+    extends MinimalHeadDiameter2mm,
+      HexagonalDriver,
+      SpatioTemporalExtent,
+      Length100mm
 
-trait DriverBitHex2mm extends HeadHex2mm, AllenKey, SpatioTemporalExtent
+trait DriverBitHex2mm
+    extends MinimalHeadDiameter2mm,
+      HexagonalDriver,
+      SpatioTemporalExtent,
+      Length10mm
 
 case class Participation(
     beginning: ZonedDateTime,

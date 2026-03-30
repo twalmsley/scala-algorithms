@@ -7,10 +7,20 @@ import java.util.UUID
 
 class AssembliesTestSuite extends AnyFunSuite:
 
-  test("test"):
+  test(
+    "test that a KindOfActivity can be defined which logs its Activities as HQDM"
+  ):
 
-    type TighteningTool = AllenKey & HeadHex2mm & SpatioTemporalExtent
+    type TighteningTool = HexagonalDriver & MinimalHeadDiameter2mm &
+      SpatioTemporalExtent
 
+    type M3SteelBolt10mmHexHead =
+      ThreadSizeM3 & Diameter3mm & Length10mm & MaterialSteel &
+        MinimalHeadDiameter2mm & SpatioTemporalExtent
+
+    ///
+    /// ## Define the Activity "Tighten"
+    ///
     def tighten[A <: TighteningTool, B <: M3SteelBolt10mmHexHead](
         tool: A,
         bolt: B
@@ -44,13 +54,10 @@ class AssembliesTestSuite extends AnyFunSuite:
       (activity, participants)
     }
 
-    val bolt1: M3SteelBolt10mmHexHead = new M3SteelBolt10mmHexHead {
+    val bolt1 = new BoltToBeTightened {
       val id = UUID.randomUUID()
     }
     val allenKey2mm = new AllenKeyHex2mm {
-      val id = UUID.randomUUID()
-    }
-    val driverBit = new DriverBitHex2mm {
       val id = UUID.randomUUID()
     }
 
@@ -59,6 +66,12 @@ class AssembliesTestSuite extends AnyFunSuite:
     println(result)
     println("--------------------------------")
 
-    val x: HeadHex2mm = bolt1
+    val driverBit = new DriverBitHex2mm {
+      val id = UUID.randomUUID()
+    }
+
+    tighten(driverBit, bolt1)
+
+    val x: MinimalHeadDiameter2mm = bolt1
 
     assert(x == bolt1)
