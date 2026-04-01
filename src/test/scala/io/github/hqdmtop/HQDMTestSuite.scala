@@ -1,12 +1,13 @@
 package io.github.hqdmtop
 
+
 import org.scalatest.funsuite.AnyFunSuite
 
 import java.util.UUID
 
 class HQDMTestSuite extends AnyFunSuite:
 
-  class ThingWithTemporalParts(
+  private class ThingWithTemporalParts(
       val id: Identifier,
       val temporalPartOf: Option[Set[SpatioTemporalExtent]],
       val beginning: Event,
@@ -19,11 +20,11 @@ class HQDMTestSuite extends AnyFunSuite:
   ):
 
     val ste1Start = new Event:
-      val id = UUID.randomUUID()
+      val id: Identifier = UUID.randomUUID()
       val geometry: Option[Geometry] = None
 
     val ste1End = new Event:
-      val id = UUID.randomUUID()
+      val id: Identifier = UUID.randomUUID()
       val geometry: Option[Geometry] = None
 
     val ste1 = new ThingWithTemporalParts(
@@ -35,11 +36,11 @@ class HQDMTestSuite extends AnyFunSuite:
     )
 
     val ste2Start = new Event {
-      val id = UUID.randomUUID()
+      val id: Identifier = UUID.randomUUID()
       val geometry: Option[Geometry] = None
     }
     val ste2End = new Event {
-      val id = UUID.randomUUID()
+      val id: Identifier = UUID.randomUUID()
       val geometry: Option[Geometry] = None
     }
     val ste2 = new ThingWithTemporalParts(

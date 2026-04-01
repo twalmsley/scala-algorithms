@@ -2,6 +2,7 @@ package io.github.hqdmtop
 
 import cats.free.Free
 import cats.free.Free.liftF
+import scala.collection.mutable
 
 // A for Algebra
 sealed trait HQDMStoreA[A]
@@ -14,6 +15,8 @@ case class CreateNewSpatioTemporalExtent(beginning: Event, ending: Event, geomet
 case class InsertThing[A <: Thing](thing: A) extends HQDMStoreA[Unit]
 
 case class GetThingById(id: Identifier) extends HQDMStoreA[Option[Thing]]
+
+case class GetStore[A <: Thing]() extends HQDMStoreA[mutable.Map[Identifier, A]]
 
 // HQDMStore Free monad
 type HQDMStore[A] = Free[HQDMStoreA, A]
@@ -30,3 +33,6 @@ def insertThing[A <: Thing](thing: A): HQDMStore[Unit] =
 
 def getThingById(id: Identifier): HQDMStore[Option[Thing]] =
   liftF[HQDMStoreA, Option[Thing]](GetThingById(id))
+
+def getStore[A <: Thing]: HQDMStore[mutable.Map[Identifier, A]] =
+  liftF[HQDMStoreA, mutable.Map[Identifier, A]](GetStore())
