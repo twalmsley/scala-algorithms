@@ -9,8 +9,12 @@ sealed trait HQDMStoreA[A]
 
 case class CreateNewEvent() extends HQDMStoreA[Event]
 
-case class CreateNewSpatioTemporalExtent(beginning: Event, ending: Event, geometry: Option[Geometry], temporalPartOf: Option[Set[SpatioTemporalExtent]])
-  extends HQDMStoreA[SpatioTemporalExtent]
+case class CreateNewSpatioTemporalExtent(
+    beginning: Event,
+    ending: Event,
+    geometry: Option[Geometry],
+    temporalPartOf: Option[Set[SpatioTemporalExtent]]
+) extends HQDMStoreA[SpatioTemporalExtent]
 
 case class InsertThing[A <: Thing](thing: A) extends HQDMStoreA[Unit]
 
@@ -25,8 +29,15 @@ type HQDMStore[A] = Free[HQDMStoreA, A]
 def createNewEvent(): HQDMStore[Event] =
   liftF[HQDMStoreA, Event](CreateNewEvent())
 
-def createNewSpatioTemporalExtent(beginning: Event, ending: Event, geometry: Option[Geometry], temporalPartOf: Option[Set[SpatioTemporalExtent]]): HQDMStore[SpatioTemporalExtent] =
-  liftF[HQDMStoreA, SpatioTemporalExtent](CreateNewSpatioTemporalExtent(beginning, ending, geometry, temporalPartOf))
+def createNewSpatioTemporalExtent(
+    beginning: Event,
+    ending: Event,
+    geometry: Option[Geometry],
+    temporalPartOf: Option[Set[SpatioTemporalExtent]]
+): HQDMStore[SpatioTemporalExtent] =
+  liftF[HQDMStoreA, SpatioTemporalExtent](
+    CreateNewSpatioTemporalExtent(beginning, ending, geometry, temporalPartOf)
+  )
 
 def insertThing[A <: Thing](thing: A): HQDMStore[Unit] =
   liftF[HQDMStoreA, Unit](InsertThing(thing))
@@ -36,3 +47,4 @@ def getThingById(id: Identifier): HQDMStore[Option[Thing]] =
 
 def getStore[A <: Thing]: HQDMStore[mutable.Map[Identifier, A]] =
   liftF[HQDMStoreA, mutable.Map[Identifier, A]](GetStore())
+

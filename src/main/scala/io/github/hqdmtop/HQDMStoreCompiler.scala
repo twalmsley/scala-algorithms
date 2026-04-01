@@ -5,10 +5,17 @@ import cats.{Id, ~>}
 import java.util.UUID
 import scala.collection.mutable
 
-case class SpatioTemporalExtentImpl(id: Identifier, temporalPartOf: Option[Set[SpatioTemporalExtent]], geometry: Option[Geometry], beginning: Event, ending: Event) extends SpatioTemporalExtent
-case class EventImpl(id:Identifier, geometry: Option[Geometry]) extends Event
+case class SpatioTemporalExtentImpl(
+    id: Identifier,
+    temporalPartOf: Option[Set[SpatioTemporalExtent]],
+    geometry: Option[Geometry],
+    beginning: Event,
+    ending: Event
+) extends SpatioTemporalExtent
 
-def hqdmStoreCompiler: HQDMStoreA ~> Id = new(HQDMStoreA ~> Id) {
+case class EventImpl(id: Identifier, geometry: Option[Geometry]) extends Event
+
+def hqdmStoreCompiler: HQDMStoreA ~> Id = new (HQDMStoreA ~> Id) {
 
   val store = mutable.Map.empty[UUID, Thing]
 
@@ -19,9 +26,20 @@ def hqdmStoreCompiler: HQDMStoreA ~> Id = new(HQDMStoreA ~> Id) {
         val e = EventImpl(id, None)
         store += (id -> e)
         e
-      case CreateNewSpatioTemporalExtent(beginning: Event, ending: Event, geometry: Option[Geometry], temporalPartOf: Option[Set[SpatioTemporalExtent]]) =>
+      case CreateNewSpatioTemporalExtent(
+            beginning: Event,
+            ending: Event,
+            geometry: Option[Geometry],
+            temporalPartOf: Option[Set[SpatioTemporalExtent]]
+          ) =>
         val id = UUID.randomUUID()
-        val ste = SpatioTemporalExtentImpl(id, temporalPartOf, geometry, beginning, ending)
+        val ste = SpatioTemporalExtentImpl(
+          id,
+          temporalPartOf,
+          geometry,
+          beginning,
+          ending
+        )
         store += (id -> ste)
         ste
       case InsertThing(t: Thing) =>
@@ -32,3 +50,4 @@ def hqdmStoreCompiler: HQDMStoreA ~> Id = new(HQDMStoreA ~> Id) {
       case GetStore() => store.asInstanceOf[A]
 
 }
+

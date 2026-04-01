@@ -19,7 +19,7 @@ trait TemporalExtent extends Thing:
   val beginning: Event
   val ending: Event
 
-trait Geometry 
+trait Geometry
 
 trait SpatialExtent extends Thing:
   val geometry: Option[Geometry]

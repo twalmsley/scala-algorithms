@@ -1,19 +1,10 @@
 package io.github.hqdmtop
 
-
 import org.scalatest.funsuite.AnyFunSuite
 
 import java.util.UUID
 
 class HQDMTestSuite extends AnyFunSuite:
-
-  private class ThingWithTemporalParts(
-      val id: Identifier,
-      val temporalPartOf: Option[Set[SpatioTemporalExtent]],
-      val beginning: Event,
-      val ending: Event,
-      val geometry: Option[Geometry]
-  ) extends SpatioTemporalExtent
 
   test(
     "can create a SpatioTemporalExtent with temporal parts of the correct type"
@@ -27,7 +18,7 @@ class HQDMTestSuite extends AnyFunSuite:
       val id: Identifier = UUID.randomUUID()
       val geometry: Option[Geometry] = None
 
-    val ste1 = new ThingWithTemporalParts(
+    val ste1 = new SpatioTemporalExtentImpl(
       id = UUID.randomUUID(),
       temporalPartOf = None,
       beginning = ste1Start,
@@ -43,7 +34,7 @@ class HQDMTestSuite extends AnyFunSuite:
       val id: Identifier = UUID.randomUUID()
       val geometry: Option[Geometry] = None
     }
-    val ste2 = new ThingWithTemporalParts(
+    val ste2 = new SpatioTemporalExtentImpl(
       id = UUID.randomUUID(),
       temporalPartOf = Some(Set(ste1)),
       beginning = ste2Start,
