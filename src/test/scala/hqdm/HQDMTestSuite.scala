@@ -1,6 +1,7 @@
 package io.github.hqdmtop
 
 import org.scalatest.funsuite.AnyFunSuite
+
 import java.util.UUID
 
 class HQDMTestSuite extends AnyFunSuite:

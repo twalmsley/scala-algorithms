@@ -10,9 +10,10 @@ lazy val root = project
 
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % Test,
     libraryDependencies += "org.typelevel" %% "cats-core" % "2.13.0",
-    scalacOptions ++= Seq(
-      "-deprecation",
-      "-feature",
-      "-Yexplicit-nulls"
-    )
+    libraryDependencies += "org.typelevel" %% "cats-free" % "2.13.0",
+      scalacOptions ++= Seq (
+        "-deprecation",
+        "-feature",
+        "-Yexplicit-nulls"
+      )
   )
