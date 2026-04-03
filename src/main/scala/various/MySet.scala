@@ -14,9 +14,9 @@ trait MySet[A] extends (A => Boolean):
   def filter(predicate: A => Boolean): MySet[A]
   def foreach(f: A => Unit): Unit
 
-  def remove(elem: A): MySet[A]
-  def intersection(other: MySet[A]): MySet[A]
-  def difference(other: MySet[A]): MySet[A]
+  def -(elem: A): MySet[A]
+  def &(other: MySet[A]): MySet[A]
+  def --(other: MySet[A]): MySet[A]
 
 object MySet:
   def apply[A](as: A*): MySet[A] =
@@ -37,9 +37,9 @@ class EmptySet[A] extends MySet[A]:
   override def filter(predicate: A => Boolean): MySet[A] = this
   override def foreach(f: A => Unit): Unit = ()
 
-  override def remove(elem: A): MySet[A] = this
-  override def intersection(other: MySet[A]): MySet[A] = this
-  override def difference(other: MySet[A]): MySet[A] = other
+  override def -(elem: A): MySet[A] = this
+  override def &(other: MySet[A]): MySet[A] = this
+  override def --(other: MySet[A]): MySet[A] = other
 
 class NonEmptySet[A](val head: A, val tail: MySet[A]) extends MySet[A]:
   override def contains(elem: A): Boolean =
@@ -68,17 +68,15 @@ class NonEmptySet[A](val head: A, val tail: MySet[A]) extends MySet[A]:
     f(head)
     tail.foreach(f)
 
-  override def remove(elem: A): MySet[A] = 
+  override def -(elem: A): MySet[A] =
     if (head == elem) tail
-    else tail.remove(elem) + head
+    else tail - elem + head
 
-  override def intersection(other: MySet[A]): MySet[A] =
-    val theRest = tail.intersection(other)
+  override def &(other: MySet[A]): MySet[A] =
+    val theRest = tail & other
     if (other.contains(head)) theRest + head
     else theRest
 
-  override def difference(other: MySet[A]): MySet[A] =
-    if (other.contains(head)) tail.difference(other.remove(head))
-    else tail.difference(other) + head
-
-
+  override def --(other: MySet[A]): MySet[A] =
+    if (other.contains(head)) tail -- (other - head)
+    else tail -- other + head
