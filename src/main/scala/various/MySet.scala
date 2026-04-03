@@ -73,7 +73,7 @@ class NonEmptySet[A](val head: A, val tail: MySet[A]) extends MySet[A]:
     else tail - elem + head
 
   override def &(other: MySet[A]): MySet[A] =
-    filter(other.contains(_))
+    filter(other)
 
   override def --(other: MySet[A]): MySet[A] =
-    filter(!other.contains(_))
+    filter(!other(_))
