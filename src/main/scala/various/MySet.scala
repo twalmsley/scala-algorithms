@@ -3,62 +3,82 @@ package various
 import scala.annotation.tailrec
 
 trait MySet[A] extends (A => Boolean):
-  def apply(elem:A) = contains(elem)
+  def apply(elem: A) = contains(elem)
 
-  def contains(elem:A): Boolean
-  def +(elem:A): MySet[A]
-  def ++(set:MySet[A]):MySet[A]
+  def contains(elem: A): Boolean
+  def +(elem: A): MySet[A]
+  def ++(set: MySet[A]): MySet[A]
 
-  def map[B](f:A => B):MySet[B]
-  def flatMap[B](f:A => MySet[B]):MySet[B]
-  def filter(predicate: A => Boolean):MySet[A]
-  def foreach(f:A => Unit):Unit
+  def map[B](f: A => B): MySet[B]
+  def flatMap[B](f: A => MySet[B]): MySet[B]
+  def filter(predicate: A => Boolean): MySet[A]
+  def foreach(f: A => Unit): Unit
+
+  def remove(elem: A): MySet[A]
+  def intersection(other: MySet[A]): MySet[A]
+  def difference(other: MySet[A]): MySet[A]
 
 object MySet:
-  def apply[A](as: A*):MySet[A] =
+  def apply[A](as: A*): MySet[A] =
     @tailrec
-    def buildSet(s: Seq[A], acc:MySet[A]): MySet[A] =
+    def buildSet(s: Seq[A], acc: MySet[A]): MySet[A] =
       if (s == Seq.empty) acc
       else buildSet(s.tail, acc + s.head)
     buildSet(as, new EmptySet[A]())
 
-
 class EmptySet[A] extends MySet[A]:
-  def contains(elem:A): Boolean = false
-  def +(elem:A): MySet[A] = new NonEmptySet(elem, this)
-  def ++(set:MySet[A]):MySet[A] = set
 
-  def map[B](f:A => B):MySet[B] = new EmptySet[B]()
-  def flatMap[B](f:A => MySet[B]):MySet[B] = new EmptySet[B]()
-  def filter(predicate: A => Boolean):MySet[A] = this
-  def foreach(f:A => Unit):Unit = ()
+  override def contains(elem: A): Boolean = false
+  override def +(elem: A): MySet[A] = new NonEmptySet(elem, this)
+  override def ++(set: MySet[A]): MySet[A] = set
+
+  override def map[B](f: A => B): MySet[B] = new EmptySet[B]()
+  override def flatMap[B](f: A => MySet[B]): MySet[B] = new EmptySet[B]()
+  override def filter(predicate: A => Boolean): MySet[A] = this
+  override def foreach(f: A => Unit): Unit = ()
+
+  override def remove(elem: A): MySet[A] = this
+  override def intersection(other: MySet[A]): MySet[A] = this
+  override def difference(other: MySet[A]): MySet[A] = other
 
 class NonEmptySet[A](val head: A, val tail: MySet[A]) extends MySet[A]:
-  def contains(elem:A): Boolean = 
+  override def contains(elem: A): Boolean =
     if (elem == head) true
     else tail.contains(elem)
 
-  def +(elem:A): MySet[A] = 
+  override def +(elem: A): MySet[A] =
     if (this.contains(elem)) this
     else new NonEmptySet[A](elem, this)
 
-  def ++(set:MySet[A]):MySet[A] = 
+  override def ++(set: MySet[A]): MySet[A] =
     tail ++ set + head
 
-  def map[B](f:A => B):MySet[B] = 
+  override def map[B](f: A => B): MySet[B] =
     tail.map(f) + f(head)
 
-  def flatMap[B](f:A => MySet[B]):MySet[B] = 
+  override def flatMap[B](f: A => MySet[B]): MySet[B] =
     tail.flatMap(f) ++ f(head)
 
-  def filter(predicate: A => Boolean):MySet[A] = 
+  override def filter(predicate: A => Boolean): MySet[A] =
     val filteredTail = tail.filter(predicate)
     if (predicate(head)) filteredTail + head
     else filteredTail
 
-
-  def foreach(f:A => Unit):Unit = 
+  override def foreach(f: A => Unit): Unit =
     f(head)
     tail.foreach(f)
+
+  override def remove(elem: A): MySet[A] = 
+    if (head == elem) tail
+    else tail.remove(elem) + head
+
+  override def intersection(other: MySet[A]): MySet[A] =
+    val theRest = tail.intersection(other)
+    if (other.contains(head)) theRest + head
+    else theRest
+
+  override def difference(other: MySet[A]): MySet[A] =
+    if (other.contains(head)) tail.difference(other.remove(head))
+    else tail.difference(other) + head
 
 
