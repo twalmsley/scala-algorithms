@@ -44,5 +44,5 @@ class MySetTestSuite extends AnyFunSuite:
     assert(!s1.contains(3))
     assert(!s1.contains(4))
     assert(s1.contains(5))
-    assert(s1.contains(6))
-    assert(s1.contains(7))
+    assert(!s1.contains(6))
+    assert(!s1.contains(7))

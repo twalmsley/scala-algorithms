@@ -39,7 +39,7 @@ class EmptySet[A] extends MySet[A]:
 
   override def -(elem: A): MySet[A] = this
   override def &(other: MySet[A]): MySet[A] = this
-  override def --(other: MySet[A]): MySet[A] = other
+  override def --(other: MySet[A]): MySet[A] = this
 
 class NonEmptySet[A](val head: A, val tail: MySet[A]) extends MySet[A]:
   override def contains(elem: A): Boolean =
